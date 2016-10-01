@@ -3,11 +3,9 @@ package io.caster.mockito;
 public class UserRegistration {
 
     private Database database;
-    private EmailSender emailSender;
 
-    public UserRegistration(Database database, EmailSender emailSender) {
+    public UserRegistration(Database database) {
         this.database = database;
-        this.emailSender = emailSender;
     }
 
     public void registerNewUser(String emailAddress) throws UserAlreadyRegisteredException {
@@ -16,6 +14,5 @@ public class UserRegistration {
         }
 
         database.addUser(emailAddress);
-        emailSender.sendVerificationEmail(emailAddress);
     }
 }
