@@ -21,7 +21,19 @@ public class UserRegistrationTest {
 
     @Test (expected = UserAlreadyRegisteredException.class)
     public void shouldThrowExceptionWhenUserAlreadyRegistered() throws UserAlreadyRegisteredException {
+
         Mockito.when(mockDatabase.hasUser(anyString())).thenReturn(true);
+
         testee.registerNewUser("foo@example.com");
+    }
+
+    @Test
+    public void shouldAddNewUserToDatabase() throws UserAlreadyRegisteredException {
+        String emailAddress = "foo@example.com";
+        Mockito.when(mockDatabase.hasUser(emailAddress)).thenReturn(false);
+
+        testee.registerNewUser(emailAddress);
+
+        Mockito.verify(mockDatabase).addUser(emailAddress);
     }
 }
