@@ -17,4 +17,12 @@ public class SimpleDatabase implements Database {
     public boolean hasUser(String emailAddress) {
         return users.contains(emailAddress);
     }
+
+    @Override
+    public void deleteUser(String emailAddress) throws UserNotFoundException {
+        if (!users.contains(emailAddress)) {
+            throw new UserNotFoundException();
+        }
+        users.remove(emailAddress);
+    }
 }

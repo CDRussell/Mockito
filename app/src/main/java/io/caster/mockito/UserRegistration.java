@@ -28,4 +28,11 @@ public class UserRegistration {
 
         database.addUser(emailAddress);
     }
+
+    public void deleteUser(String emailAddress) throws UserNotFoundException {
+        database.deleteUser(emailAddress);
+    }
+
+
+
 }
