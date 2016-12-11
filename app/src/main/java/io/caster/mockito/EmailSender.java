@@ -1,5 +1,7 @@
 package io.caster.mockito;
 
 public interface EmailSender {
-    void sendVerificationEmail(String emailAddress);
+
+    boolean sendRegistrationEmail(RegistrationEmail email);
+
 }

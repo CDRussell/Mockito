@@ -1,6 +1,7 @@
 package io.caster.mockito;
 
 public class User {
+
     private String emailAddress;
 
     public User(String emailAddress) {

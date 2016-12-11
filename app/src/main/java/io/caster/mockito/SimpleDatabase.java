@@ -20,7 +20,7 @@ public class SimpleDatabase implements Database {
 
     @Override
     public void deleteUser(String emailAddress) throws UserNotFoundException {
-        if (!users.contains(emailAddress)) {
+        if (!hasUser(emailAddress)) {
             throw new UserNotFoundException();
         }
         users.remove(emailAddress);
