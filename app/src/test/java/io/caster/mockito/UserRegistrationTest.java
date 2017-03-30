@@ -13,7 +13,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class UserRegistrationTest {
@@ -58,7 +57,9 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void shouldAddNewUserToDatabaseUsingAnyMatcherTypedInside() throws UserAlreadyRegisteredException, IOException {
+    public void shouldAddNewUserToDatabase() throws UserAlreadyRegisteredException, IOException {
+        UserRegistration testee = new UserRegistration(mockDatabase, mockEmailSender);
+
         String emailAddress = "foo@example.com";
         when(mockDatabase.hasUser(emailAddress)).thenReturn(false);
 
@@ -71,13 +72,13 @@ public class UserRegistrationTest {
     }
 
     @Test(expected = UserAlreadyRegisteredException.class)
-    public void shouldThrowExceptionAddingEmailAddressWhenUserAlreadyRegistered() throws UserAlreadyRegisteredException, EmailFailedException {
-        /*
-         * Both of these are functionally equivalent in this example
-             Mockito.when(mockDatabase.hasUser(anyString())).thenReturn(true);
-             Mockito.doReturn(true).when(mockDatabase).hasUser(anyString());
-         */
-        Mockito.doReturn(true).when(mockDatabase).hasUser(anyString());
+    public void shouldThrowExceptionAddingDuplicateEmail() throws UserAlreadyRegisteredException, EmailFailedException {
+        Database mockDatabase = Mockito.mock(Database.class);
+        EmailSender mockEmailSender = Mockito.mock(EmailSender.class);
+
+        UserRegistration testee = new UserRegistration(mockDatabase, mockEmailSender);
+
+        Mockito.when(mockDatabase.hasUser("foo@example.com")).thenReturn(true);
         testee.registerNewUser("foo@example.com");
     }
 
