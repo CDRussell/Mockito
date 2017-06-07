@@ -1,4 +1,4 @@
 package io.caster.mockito;
 
-public class UserNotFoundException extends Throwable {
+public class UserNotFoundException extends RuntimeException {
 }

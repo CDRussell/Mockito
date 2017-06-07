@@ -1,29 +1,19 @@
 package io.caster.mockito;
 
+import java.util.List;
+
 public class UserRegistration {
 
     private Database database;
-    private EmailSender emailSender;
 
-    public UserRegistration(Database database, EmailSender emailSender) {
+    public UserRegistration(Database database) {
         this.database = database;
-        this.emailSender = emailSender;
     }
 
-    public void registerNewUser(String emailAddress) throws UserAlreadyRegisteredException, EmailFailedException {
-        if (database.hasUser(emailAddress)) {
-            throw new UserAlreadyRegisteredException();
+    public void deleteUsers(List<String> userIds) {
+        for (String id : userIds) {
+            database.deleteUser(id);
         }
-
-        if(!emailSender.sendRegistrationEmail(new RegistrationEmail(emailAddress))) {
-            throw new EmailFailedException();
-        }
-        database.addUser(emailAddress);
     }
-
-    public void deleteUser(String emailAddress) throws UserNotFoundException {
-        database.deleteUser(emailAddress);
-    }
-
 
 }
