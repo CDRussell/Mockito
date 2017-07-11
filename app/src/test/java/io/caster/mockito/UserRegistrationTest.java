@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class UserRegistrationTest {
 
@@ -23,13 +25,12 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void shouldDeleteMultipleUsers() throws IOException {
+    public void shouldNotDropDatabaseWhenDeletingUsers() throws IOException {
         List<String> userIds = new ArrayList<>();
-        userIds.add("foo");
-        userIds.add("bar");
-
         testee.deleteUsers(userIds);
-        Mockito.verify(mockDatabase, Mockito.times(2)).deleteUser(anyString());
 
+        // both of these lines are functionally identical
+        verify(mockDatabase, times(0)).dropDatabase();
+        verify(mockDatabase, never()).dropDatabase();
     }
 }

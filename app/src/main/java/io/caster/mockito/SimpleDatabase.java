@@ -12,4 +12,9 @@ public class SimpleDatabase implements Database {
     public void deleteUser(String emailAddress) throws UserNotFoundException {
         users.remove(emailAddress);
     }
+
+    @Override
+    public void dropDatabase() {
+
+    }
 }
