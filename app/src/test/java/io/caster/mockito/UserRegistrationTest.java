@@ -23,13 +23,44 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void shouldDeleteMultipleUsers() throws IOException {
+    public void shouldCallMockAMinimumNumberOfTimes() throws IOException {
         List<String> userIds = new ArrayList<>();
-        userIds.add("foo");
-        userIds.add("bar");
+        userIds.add("a");
+        userIds.add("b");
+        userIds.add("c");
 
         testee.deleteUsers(userIds);
-        Mockito.verify(mockDatabase, Mockito.times(2)).deleteUser(anyString());
 
+        Mockito.verify(mockDatabase, Mockito.atLeast(2)).deleteUser(anyString());
+    }
+
+    @Test
+    public void shouldCallMockAMaximumNumberOfTimes() throws IOException {
+        List<String> userIds = new ArrayList<>();
+        userIds.add("a");
+        userIds.add("b");
+        userIds.add("c");
+
+        testee.deleteUsers(userIds);
+
+        Mockito.verify(mockDatabase, Mockito.atMost(5)).deleteUser(anyString());
+    }
+
+    @Test
+    public void shouldCallMockANumberOfTimesAsARange() throws IOException {
+        List<String> userIds = new ArrayList<>();
+        userIds.add("a");
+        userIds.add("b");
+        userIds.add("c");
+
+        testee.deleteUsers(userIds);
+
+        Mockito.verify(mockDatabase, Mockito.atLeast(2)).deleteUser(anyString());
+        Mockito.verify(mockDatabase, Mockito.atMost(5)).deleteUser(anyString());
     }
 }
+
+
+
+
+
